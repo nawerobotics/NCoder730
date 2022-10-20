@@ -27,7 +27,7 @@
 #define NCoder730_SPI_MODE_0       SPI_MODE0
 #define NCoder730_SPI_MODE_3       SPI_MODE3
 
-
+// Registers of MA730
 #define ZERO_SETTING0_REG 0x0
 #define ZERO_SETTING1_REG 0x1
 #define BCT_REG 0x2
@@ -40,31 +40,158 @@
 
 class NCoder730 {
 public:
+    /**
+     * @brief Construct a new NCoder730 object
+     * 
+     */
     NCoder730();
+    /**
+     * @brief Destroy the NCoder730 object
+     * 
+     */
+    ~NCoder730();
+    /**
+     * @brief Initialization function for SPI Interface
+     * 
+     * @param spiChipSelectPin Chip Select pin for SPI Communication
+     */
     void  beginSPI(uint8_t spiChipSelectPin);
+    /**
+     * @brief Initialization function for SPI Communication with SPI Settings
+     * 
+     * @param spiSclkFrequency SPI Clock Frequency for NCoder730
+     * @param spiMode  SPI Mode for NCoder730
+     * @param spiChipSelectPin SPI Chip Select Pin
+     */
     void  beginSPI(int32_t spiSclkFrequency, uint8_t spiMode, uint8_t spiChipSelectPin);
-    void beginPWM(uint8_t pwmPin);
+    /**
+     * @brief Set the Spi Clock Frequency
+     * 
+     * @param speedMaximum Clock frequency for SPI Communication
+     */
     void setSpiClockFrequency(uint32_t speedMaximum);
+    /**
+     * @brief Set the Spi Data Mode for SPI Communication
+     * 
+     * @param spiMode Mode for SPI Communication
+     * @n MA730 IC support SPI mode 3 and 0 [SPI_MODE3, SPI_MODE0]
+     * @n NCoder730_SPI_MODE_0
+     * @n NCoder730_SPI_MODE_3
+     */
     void setSpiDataMode(uint8_t spiMode);
+    /**
+     * @brief Set the Spi Chip Select Pin for SPI Communication
+     * 
+     * @param spiChipSelectPin Digital Pin for Chip Select
+     */
     void setSpiChipSelectPin(uint8_t spiChipSelectPin);
-    void setZeroPosition(float angle);
-    float getZeroPosition();
-    void setPulsePerTurn(uint16_t ppr);
-    uint16_t getPulsePerTurn();
-    void setRotationDirection(bool dir);
-    bool getRotationDirection();
+    /**
+     * @brief Function to end SPI Transaction/Communication
+     * 
+     */
     void endSPI();
+    /**
+     * @brief Reads absolute encoder angle
+     * 
+     * @return return absolute_angle in degrees 
+     */
     double readAbsoluteAngle();
+    /**
+     * @brief Reads raw value of absolute angle
+     * 
+     * @return return raw absolute angle 
+     */
     uint16_t readAbsoluteAngleRaw();
+    /**
+     * @brief Reads raw value of absolute angle with error check
+     * 
+     * @param error retreive error
+     * @return return raw absolute value
+     */
     uint16_t readAbsoluteAngleRaw(bool* error);
+    /**
+     * @brief Reads raw value of absolute angle with 8bit resolution
+     * 
+     * @return returns 8 bit raw absolute value
+     */
     uint8_t readAbsoluteAngleRaw8();
+    /**
+     * @brief Converts raw absolute angle to degrees
+     * 
+     * @param rawAngleDataBitLength data length of raw angle
+     * @param rawAngle 16-bit / 8bit raw absolute angle value
+     * @return returns absolute angle in degrees
+     */
     double convertRawAngleToDegree(uint8_t rawAngleDataBitLength, uint16_t rawAngle);
+    /**
+     * @brief Set the Zero Position of the NCoder730
+     * 
+     * @param angle offset angle for zero positioning
+     */
+    void setZeroPosition(float angle);
+    /**
+     * @brief Get the Zero Position Offset Angle of the NCoder730
+     * 
+     * @return returns zero position offset angle 
+     */
+    float getZeroPosition();
+    /**
+     * @brief Set the Pulse Per Turn for NCoder730
+     * 
+     * @param ppr Pulse Per Revolution value of the Encoder in Incremental Mode
+     * @n CPR is 4 times PPR
+     */
+    void setPulsePerTurn(uint16_t ppr);
+    /**
+     * @brief Get the Pulse Per Turn value of Incremental Encoder for NCoder730
+     * 
+     * @return returns the PPR value
+     */
+    uint16_t getPulsePerTurn();
+    /**
+     * @brief Set the Rotation Direction for the NCoder730
+     * 
+     * @param dir direction value
+     * @n true -> clockwise
+     * @n false-> anticlockwise
+     */
+    void setRotationDirection(bool dir);
+    /**
+     * @brief Get the Rotation Direction of the NCoder730
+     * 
+     * @return returns true if the rotation direction is clockwise
+     * @return returns false if the rotation direction is anticlockwise
+     */
+    bool getRotationDirection();
+    
 private:
+    /**
+     * @brief variable 
+     * 
+     */
     uint32_t _speedMaximum;
     uint8_t _spiMode;
     uint8_t _spiChipSelectPin;
+    /**
+     * @brief Reads the 16 bit Absolute Raw Angle Value
+     * 
+     * @return returns 16 bit raw absolute angle value 
+     */
     uint16_t readAbsoluteAngleRaw16();
+    /**
+     * @brief Reads the SPI registers of NCoder730
+     * 
+     * @param address address whose value is to be read
+     * @return returns the value written to the address
+     */
     uint8_t readRegister(uint8_t address);
+    /**
+     * @brief Writes the SPI registors of NCoder730
+     * 
+     * @param address address into which value is to be written
+     * @param value value that is to be written
+     * @return returns the value in the registor
+     */
     uint8_t writeRegister(uint8_t address, uint8_t value);
 };
 

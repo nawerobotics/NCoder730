@@ -20,6 +20,9 @@
 NCoder730::NCoder730(){
 }
 
+NCoder730::~NCoder730(){
+}
+
 void  NCoder730::beginSPI(uint8_t spiChipSelectPin){
     setSpiChipSelectPin(spiChipSelectPin);
     _speedMaximum = 10000000;
@@ -127,32 +130,6 @@ uint16_t NCoder730::readAbsoluteAngleRaw(bool* error){
     return angle;
 }
 
-uint8_t NCoder730::readRegister(uint8_t address){
-  uint8_t readbackRegisterValue;
-  digitalWrite(_spiChipSelectPin, LOW);
-  SPI.transfer16(READ_REG_COMMAND | ((address & 0x1F) << 8) | 0x00);
-  digitalWrite(_spiChipSelectPin, HIGH);
-  delayMicroseconds(1); //Wait for 1us (=1000 ns) to respect tIdleReg of 750ns before register readout
-  digitalWrite(_spiChipSelectPin, LOW);
-  readbackRegisterValue = ((SPI.transfer16(0x0000) & 0xFF00) >> 8);
-  digitalWrite(_spiChipSelectPin, HIGH);
-  delayMicroseconds(1); //Wait for 1us (=1000 ns) to respect tIdleReg of 750ns after register readout
-  return readbackRegisterValue;
-}
-
-uint8_t NCoder730::writeRegister(uint8_t address, uint8_t value){
-  uint8_t readbackRegisterValue;
-  digitalWrite(_spiChipSelectPin, LOW);
-  SPI.transfer16(WRITE_REG_COMMAND | ((address & 0x1F) << 8) | value);
-  digitalWrite(_spiChipSelectPin, HIGH);
-  delay(20);                      //Wait for 20ms
-  digitalWrite(_spiChipSelectPin, LOW);
-  readbackRegisterValue = ((SPI.transfer16(0x0000) & 0xFF00) >> 8);
-  digitalWrite(_spiChipSelectPin, HIGH);
-  //readbackRegisterValue should be equal to the written value
-  return readbackRegisterValue;
-}
-
 void NCoder730::setZeroPosition(float angle){
     uint16_t zero_pos = pow(2,16) * (1 - (angle / 360.0f));
     writeRegister(ZERO_SETTING0_REG,uint8_t(zero_pos));
@@ -184,4 +161,30 @@ void NCoder730::setRotationDirection(bool dir){
 
 bool NCoder730::getRotationDirection(){
     return readRegister(ROT_DIR_REG);
+}
+
+uint8_t NCoder730::readRegister(uint8_t address){
+  uint8_t readbackRegisterValue;
+  digitalWrite(_spiChipSelectPin, LOW);
+  SPI.transfer16(READ_REG_COMMAND | ((address & 0x1F) << 8) | 0x00);
+  digitalWrite(_spiChipSelectPin, HIGH);
+  delayMicroseconds(1); //Wait for 1us (=1000 ns) to respect tIdleReg of 750ns before register readout
+  digitalWrite(_spiChipSelectPin, LOW);
+  readbackRegisterValue = ((SPI.transfer16(0x0000) & 0xFF00) >> 8);
+  digitalWrite(_spiChipSelectPin, HIGH);
+  delayMicroseconds(1); //Wait for 1us (=1000 ns) to respect tIdleReg of 750ns after register readout
+  return readbackRegisterValue;
+}
+
+uint8_t NCoder730::writeRegister(uint8_t address, uint8_t value){
+  uint8_t readbackRegisterValue;
+  digitalWrite(_spiChipSelectPin, LOW);
+  SPI.transfer16(WRITE_REG_COMMAND | ((address & 0x1F) << 8) | value);
+  digitalWrite(_spiChipSelectPin, HIGH);
+  delay(20);                      //Wait for 20ms
+  digitalWrite(_spiChipSelectPin, LOW);
+  readbackRegisterValue = ((SPI.transfer16(0x0000) & 0xFF00) >> 8);
+  digitalWrite(_spiChipSelectPin, HIGH);
+  //readbackRegisterValue should be equal to the written value
+  return readbackRegisterValue;
 }
