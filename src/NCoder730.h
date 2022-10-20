@@ -50,6 +50,8 @@ public:
     float getZeroPosition();
     void setPulsePerTurn(uint16_t ppr);
     uint16_t getPulsePerTurn();
+    void setRotationDirection(bool dir);
+    bool getRotationDirection();
     void endSPI();
     double readAngle();
     uint16_t readAngleRaw();

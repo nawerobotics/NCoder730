@@ -178,3 +178,10 @@ uint16_t NCoder730::getPulsePerTurn(){
     return (val + 1);
 }
 
+void NCoder730::setRotationDirection(bool dir){
+    writeRegister(ROT_DIR_REG,uint8_t(dir) << 7);
+}
+
+bool NCoder730::getRotationDirection(){
+    return readRegister(ROT_DIR_REG);
+}
