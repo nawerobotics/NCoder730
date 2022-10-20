@@ -62,7 +62,7 @@ void NCoder730::endSPI(){
     SPI.end();
 }
 
-double NCoder730::readAngle(){
+double NCoder730::readAbsoluteAngle(){
   uint16_t angle;
   double angleInDegree;
   angle = readAngleRaw16();
@@ -70,11 +70,11 @@ double NCoder730::readAngle(){
   return angleInDegree;
 }
 
-uint16_t NCoder730::readAngleRaw(){
-    return readAngleRaw16();
+uint16_t NCoder730::readAbsoluteAngleRaw(){
+    return readAbsoluteAngleRaw16();
 }
 
-uint16_t NCoder730::readAngleRaw16(){
+uint16_t NCoder730::readAbsoluteAngleRaw16(){
     uint16_t angle;
     digitalWrite(_spiChipSelectPin, LOW);
     angle = SPI.transfer16(0x0000); //Read 16-bit angle
@@ -82,7 +82,7 @@ uint16_t NCoder730::readAngleRaw16(){
     return angle;
 }
 
-uint8_t NCoder730::readAngleRaw8(){
+uint8_t NCoder730::readAbsoluteAngleRaw8(){
     uint8_t angle;
     digitalWrite(_spiChipSelectPin, LOW);
     angle = SPI.transfer(0x00);     //Read 8-bit angle
@@ -90,7 +90,7 @@ uint8_t NCoder730::readAngleRaw8(){
     return angle;
 }
 
-uint16_t NCoder730::readAngleRaw(bool* error){
+uint16_t NCoder730::readAbsoluteAngleRaw(bool* error){
     uint16_t angle;
     uint8_t parity;
     uint8_t highStateCount = 0;

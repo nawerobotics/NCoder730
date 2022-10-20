@@ -43,6 +43,7 @@ public:
     NCoder730();
     void  beginSPI(uint8_t spiChipSelectPin);
     void  beginSPI(int32_t spiSclkFrequency, uint8_t spiMode, uint8_t spiChipSelectPin);
+    void beginPWM(uint8_t pwmPin);
     void setSpiClockFrequency(uint32_t speedMaximum);
     void setSpiDataMode(uint8_t spiMode);
     void setSpiChipSelectPin(uint8_t spiChipSelectPin);
@@ -53,16 +54,16 @@ public:
     void setRotationDirection(bool dir);
     bool getRotationDirection();
     void endSPI();
-    double readAngle();
-    uint16_t readAngleRaw();
-    uint16_t readAngleRaw(bool* error);
-    uint8_t readAngleRaw8();
+    double readAbsoluteAngle();
+    uint16_t readAbsoluteAngleRaw();
+    uint16_t readAbsoluteAngleRaw(bool* error);
+    uint8_t readAbsoluteAngleRaw8();
     double convertRawAngleToDegree(uint8_t rawAngleDataBitLength, uint16_t rawAngle);
 private:
     uint32_t _speedMaximum;
     uint8_t _spiMode;
     uint8_t _spiChipSelectPin;
-    uint16_t readAngleRaw16();
+    uint16_t readAbsoluteAngleRaw16();
     uint8_t readRegister(uint8_t address);
     uint8_t writeRegister(uint8_t address, uint8_t value);
 };
