@@ -1,0 +1,37 @@
+#######################################
+# Syntax Coloring Map For NCoder730-Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+NCoder730	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+beginSPI	KEYWORD2
+endSPI	KEYWORD2
+readAngle	KEYWORD2
+readAngleRaw	KEYWORD2
+readAngleRaw16	KEYWORD2
+readAngleRaw8	KEYWORD2
+readRegister	KEYWORD2
+writeRegister	KEYWORD2
+setSpiClockFrequency	KEYWORD2
+setSpiDataMode	KEYWORD2
+setSpiChipSelectPin	KEYWORD2
+convertRawAngleToDegree	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+NCoder730	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+NCoder730_SPI_MODE_0	LITERAL1
+NCoder730_SPI_MODE_3	LITERAL1
