@@ -46,6 +46,8 @@ public:
     void setSpiClockFrequency(uint32_t speedMaximum);
     void setSpiDataMode(uint8_t spiMode);
     void setSpiChipSelectPin(uint8_t spiChipSelectPin);
+    void setZeroPosition(float angle);
+    float getZeroPosition();
     void endSPI();
     double readAngle();
     uint16_t readAngleRaw();

@@ -152,3 +152,15 @@ uint8_t NCoder730::writeRegister(uint8_t address, uint8_t value){
   //readbackRegisterValue should be equal to the written value
   return readbackRegisterValue;
 }
+
+void NCoder730::setZeroPosition(float angle){
+    uint16_t zero_pos = pow(2,16) * (1 - (angle / 360.0f));
+    writeRegister(ZERO_SETTING0_REG,uint8_t(zero_pos));
+    writeRegister(ZERO_SETTING1_REG,uint8_t(zero_pos>>8));
+}
+
+float NCoder730::getZeroPosition(){
+    uint16_t zero_pos = readRegister(ZERO_SETTING1_REG) << 8 | readRegister(ZERO_SETTING0_REG);
+    float angle = convertRawAngleToDegree(16 ,pow(2,16) - zero_pos);
+    return angle;
+}
