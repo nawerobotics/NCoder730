@@ -48,10 +48,13 @@ public:
     void setSpiChipSelectPin(uint8_t spiChipSelectPin);
     void setZeroPosition(float angle);
     float getZeroPosition();
+    void setPulsePerTurn(uint16_t ppr);
+    uint16_t getPulsePerTurn();
     void endSPI();
     double readAngle();
     uint16_t readAngleRaw();
     uint16_t readAngleRaw(bool* error);
+    uint8_t readAngleRaw8();
     double convertRawAngleToDegree(uint8_t rawAngleDataBitLength, uint16_t rawAngle);
 private:
     uint32_t _speedMaximum;
