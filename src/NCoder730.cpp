@@ -65,7 +65,7 @@ void NCoder730::endSPI(){
 double NCoder730::readAbsoluteAngle(){
   uint16_t angle;
   double angleInDegree;
-  angle = readAngleRaw16();
+  angle = readAbsoluteAngleRaw16();
   angleInDegree = (angle*360.0)/65536.0;
   return angleInDegree;
 }
