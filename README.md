@@ -1,6 +1,6 @@
 # NMotion NCoder730
 
-<img align="left" width="50%" style="margin-right: 12px" src="https://raw.githubusercontent.com/JUBIN0407/NCoder/devel/resources/images/IsometricView.png?token=GHSAT0AAAAAABW6D2EOZY2L43ZR4PPX4JA2Y2SNH7A"/>
+<img align="left" width="50%" style="margin-right: 12px" src="https://gitcdn.link/cdn/JUBIN0407/NCoder/devel/resources/images/IsometricView.png?token=GHSAT0AAAAAABW6D2EPMBHHMJC2CAUFZXGAY2SOEGA"/>
 
 NMotion<sup>TM</sup> NCoder730 is a Breakout Board for MPS MagAlpha MA730 Magnetic Encoder. The MA730 detects the absolute angular position of a permanent magnet, typically a diametrically magnetized cylinder on a rotating shaft. Fast data acquisition and processing provide accurate angle measurements at speeds from 0 to 60,000 rpm. The MA730 supports a wide range of magnetic field strengths and spatial configurations. This can be used for both end-of-shaft and off-axis (side-shaft mounting) configurations.
 
