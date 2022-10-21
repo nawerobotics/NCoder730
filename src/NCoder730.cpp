@@ -153,8 +153,6 @@ float NCoder730::getZeroPosition(){
 }
 
 void NCoder730::setPulsePerTurn(uint16_t ppr){
-    if(ppr < 0 && ppr > 1024)
-        return 0;
     uint16_t val = ppr - 1;
     writeRegister(PPT0_REG,uint8_t(uint8_t(val & 0x03) << 6));
     writeRegister(PPT1_REG,uint8_t(uint8_t(val >> 2)));
