@@ -39,6 +39,36 @@
 #define ROT_DIR_REG 0x9
 
 class NCoder730 {
+private:
+    /**
+     * @brief variable 
+     * 
+     */
+    uint32_t _speedMaximum;
+    uint8_t _spiMode;
+    uint8_t _spiChipSelectPin;
+    /**
+     * @brief Reads the 16 bit Absolute Raw Angle Value
+     * 
+     * @return returns 16 bit raw absolute angle value 
+     */
+    uint16_t readAbsoluteAngleRaw16();
+    /**
+     * @brief Reads the SPI registers of NCoder730
+     * 
+     * @param address address whose value is to be read
+     * @return returns the value written to the address
+     */
+    uint8_t readRegister(uint8_t address);
+    /**
+     * @brief Writes the SPI registors of NCoder730
+     * 
+     * @param address address into which value is to be written
+     * @param value value that is to be written
+     * @return returns the value in the registor
+     */
+    uint8_t writeRegister(uint8_t address, uint8_t value);
+
 public:
     /**
      * @brief Construct a new NCoder730 object
@@ -126,13 +156,13 @@ public:
     /**
      * @brief Set the Zero Position of the NCoder730
      * 
-     * @param angle offset angle for zero positioning
+     * @param angle offset angle in degrees for zero positioning
      */
     void setZeroPosition(float angle);
     /**
      * @brief Get the Zero Position Offset Angle of the NCoder730
      * 
-     * @return returns zero position offset angle 
+     * @return returns zero position offset angle in degrees
      */
     float getZeroPosition();
     /**
@@ -163,36 +193,6 @@ public:
      * @return returns false if the rotation direction is anticlockwise
      */
     bool getRotationDirection();
-    
-private:
-    /**
-     * @brief variable 
-     * 
-     */
-    uint32_t _speedMaximum;
-    uint8_t _spiMode;
-    uint8_t _spiChipSelectPin;
-    /**
-     * @brief Reads the 16 bit Absolute Raw Angle Value
-     * 
-     * @return returns 16 bit raw absolute angle value 
-     */
-    uint16_t readAbsoluteAngleRaw16();
-    /**
-     * @brief Reads the SPI registers of NCoder730
-     * 
-     * @param address address whose value is to be read
-     * @return returns the value written to the address
-     */
-    uint8_t readRegister(uint8_t address);
-    /**
-     * @brief Writes the SPI registors of NCoder730
-     * 
-     * @param address address into which value is to be written
-     * @param value value that is to be written
-     * @return returns the value in the registor
-     */
-    uint8_t writeRegister(uint8_t address, uint8_t value);
 };
 
 #endif // _NCoder730_H_
