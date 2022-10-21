@@ -1,11 +1,16 @@
 # NMotion NCoder730
 
-NMotion<sup>TM</sup> NCoder730 is a Breakout Board for MPS MagAlpha MA730 Magnetic Encoder. This can be connected to an external Microcontroller through Connector JP1 and JP2. The MA730 detects the absolute angular position of a permanent magnet, typically a diametrically magnetized cylinder on a rotating shaft. Fast data acquisition and processing provide accurate angle measurements at speeds from 0 to 60,000 rpm. The MA730 supports a wide range of magnetic field strengths and spatial configurations. This can be used for both end-of-shaft and off-axis (side-shaft mounting) configurations. On-chip non-volatile memory provides storage for configuration parameters, including the reference zero angle position, ABZ encoder settings, and magnetic field detection thresholds. An SPI serial interface allows a host microcontroller to read 14-bit absolute angle position data and to program non-volatile settings without a dedicated programmer Incremental 12 Bits ABZ Quadrature Encoder Interface with a programmable pulse per turn from 1 to 1024. The encoder also provides angle as a 14 bit PWM Output. The breakout board can be used for general purpose angle measurements high-resolution angle encoders, automotive angle and robotics.
+<img align="left" width="50%" style="margin-right: 12px" src="https://raw.githubusercontent.com/JUBIN0407/NCoder/devel/resources/images/IsometricView.png?token=GHSAT0AAAAAABW6D2EOZY2L43ZR4PPX4JA2Y2SNH7A"/>
 
-![Physical product drawing](./resources/images/IsometricView.png)
+NMotion<sup>TM</sup> NCoder730 is a Breakout Board for MPS MagAlpha MA730 Magnetic Encoder. The MA730 detects the absolute angular position of a permanent magnet, typically a diametrically magnetized cylinder on a rotating shaft. Fast data acquisition and processing provide accurate angle measurements at speeds from 0 to 60,000 rpm. The MA730 supports a wide range of magnetic field strengths and spatial configurations. This can be used for both end-of-shaft and off-axis (side-shaft mounting) configurations.
 
-## [Click here](https://www.amazon.in/gp/product/B0BC9TYGGC) to Purchase
-    SKU：NCoder730
+
+<div align="center" style="padding: 12px;">
+<a style="padding-right: 12px" href="https://www.amazon.in/gp/product/B0BC9TYGGC"><img src="https://img.shields.io/badge/-Purchase%20Product-green">
+</a>
+<a href="https://drive.google.com/file/d/1at6gYZ4LiHeWzJLjMkfs-I9OMhACQv6A/view"><img src="https://img.shields.io/badge/-Download%20Datahseet-blue">
+</a>
+</div>
 
 ## Table of Contents
 
@@ -16,10 +21,7 @@ NMotion<sup>TM</sup> NCoder730 is a Breakout Board for MPS MagAlpha MA730 Magnet
 * [Library Installation](#installation)
 * [API Functions for SPI Interface](#api-functions)
 * [Compatibility](#compatibility)
-* [History](#history)
-* [Credits](#credits)
-<snippet>
-<content>
+
 
 ## Features
 * 14-Bit Resolution Absolute Angle Encoder
@@ -44,13 +46,11 @@ NMotion<sup>TM</sup> NCoder730 is a Breakout Board for MPS MagAlpha MA730 Magnet
 *   Product Dimension: 20x20mm(LxW)
 *   Mounting Hole: 2mm (4 holes) 
 
-## Breakout Board Datasheet
-[Click Here](https://drive.google.com/file/d/1at6gYZ4LiHeWzJLjMkfs-I9OMhACQv6A/view) to download datasheet
 
 ## Library Installation
 To use this library, download the library file first, paste it into the \Arduino\libraries directory, then open the examples folder and run the demo in the folder.
 
-## API Functions for SPI Interface
+## API Functions for SPI Interface with Chip
 
 ```C++
     /**
@@ -181,14 +181,3 @@ To use this library, download the library file first, paste it into the \Arduino
 | Arduino Uno        |     √     |            |          |         |
 | Teensy 4.1         |     √     |            |     √    |         |
 | Arduino MEGA2560   |     √     |            |     √    |         |
-
-
-## History
-
-- data 2022-10-21
-- version V1.0
-
-
-## Credits
-
-Written by [JubinMathew]<jubin@nawerobotics.com>,2022,(Welcome to our [website](https://www.nawerobotics.com/))
