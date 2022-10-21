@@ -121,6 +121,11 @@ public:
      */
     void endSPI();
     /**
+     * @brief Function to write default configurations to the registors
+     * 
+     */
+    void writeDefaultConfigurations();
+    /**
      * @brief Reads absolute encoder angle
      * 
      * @return return absolute_angle in degrees 

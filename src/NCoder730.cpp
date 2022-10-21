@@ -65,6 +65,16 @@ void NCoder730::endSPI(){
     SPI.end();
 }
 
+void NCoder730::writeDefaultConfigurations(){
+    writeRegister(ZERO_SETTING0_REG, 0x00);
+    writeRegister(ZERO_SETTING1_REG, 0x00);
+    writeRegister(BCT_REG, 0x00);
+    writeRegister(TRIMMING_REG, 0x00);
+    writeRegister(PPT0_REG,0xC0);
+    writeRegister(PPT1_REG,0xFF);
+    writeRegister(ROT_DIR_REG, 0x00);
+}
+
 double NCoder730::readAbsoluteAngle(){
   uint16_t angle;
   double angleInDegree;
