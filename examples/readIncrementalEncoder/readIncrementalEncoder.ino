@@ -57,6 +57,7 @@ void setup() {
   // put your setup code here, to run once:
   //Set the Serial Communication used to report the angle
   Serial.begin(UART_BAUDRATE);
+  delay(1000);
   /**
    * @brief Initialize Incremental Encoder Pins as Interrupts
    * 

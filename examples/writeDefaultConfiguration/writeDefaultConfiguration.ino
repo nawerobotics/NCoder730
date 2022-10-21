@@ -14,6 +14,7 @@ void setup() {
    * 
    */
   Serial.begin(UART_BAUDRATE);
+  delay(1000);
   /**
    * @brief Initialize SPI with custom SPI_MODE3
    * 
