@@ -176,8 +176,9 @@ To use this library, download the library file first, paste it into the \Arduino
 
 ## Compatibility
 
-| MCU                | Work Well | Work Wrong | Untested | Remarks |
-| ------------------ | :-------: | :--------: | :------: | ------- |
-| Arduino Uno        |     √     |            |          |         |
-| Teensy 4.1         |     √     |            |     √    |         |
-| Arduino MEGA2560   |     √     |            |     √    |         |
+| MCU             | Work Well | Work Wrong | Untested | Remarks |
+| --------------- | :-------: | :--------: | :------: | ------- |
+| Arduino Uno     |     √     |            |          |         |
+| Teensy 4.1      |     √     |            |          |         |
+| Arduino MEGA2560|     √     |            |          |         |
+| ESP32-S         |     √     |            |          |         |
