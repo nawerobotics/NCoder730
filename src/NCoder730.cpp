@@ -20,6 +20,9 @@
 NCoder730::NCoder730(){
 }
 
+NCoder730::~NCoder730(){
+}
+
 void  NCoder730::beginSPI(uint8_t spiChipSelectPin){
     setSpiChipSelectPin(spiChipSelectPin);
     _speedMaximum = 10000000;
@@ -62,19 +65,29 @@ void NCoder730::endSPI(){
     SPI.end();
 }
 
-double NCoder730::readAngle(){
+void NCoder730::writeDefaultConfigurations(){
+    writeRegister(ZERO_SETTING0_REG, 0x00);
+    writeRegister(ZERO_SETTING1_REG, 0x00);
+    writeRegister(BCT_REG, 0x00);
+    writeRegister(TRIMMING_REG, 0x00);
+    writeRegister(PPT0_REG,0xC0);
+    writeRegister(PPT1_REG,0xFF);
+    writeRegister(ROT_DIR_REG, 0x00);
+}
+
+double NCoder730::readAbsoluteAngle(){
   uint16_t angle;
   double angleInDegree;
-  angle = readAngleRaw16();
+  angle = readAbsoluteAngleRaw16();
   angleInDegree = (angle*360.0)/65536.0;
   return angleInDegree;
 }
 
-uint16_t NCoder730::readAngleRaw(){
-    return readAngleRaw16();
+uint16_t NCoder730::readAbsoluteAngleRaw(){
+    return readAbsoluteAngleRaw16();
 }
 
-uint16_t NCoder730::readAngleRaw16(){
+uint16_t NCoder730::readAbsoluteAngleRaw16(){
     uint16_t angle;
     digitalWrite(_spiChipSelectPin, LOW);
     angle = SPI.transfer16(0x0000); //Read 16-bit angle
@@ -82,7 +95,7 @@ uint16_t NCoder730::readAngleRaw16(){
     return angle;
 }
 
-uint8_t NCoder730::readAngleRaw8(){
+uint8_t NCoder730::readAbsoluteAngleRaw8(){
     uint8_t angle;
     digitalWrite(_spiChipSelectPin, LOW);
     angle = SPI.transfer(0x00);     //Read 8-bit angle
@@ -90,7 +103,7 @@ uint8_t NCoder730::readAngleRaw8(){
     return angle;
 }
 
-uint16_t NCoder730::readAngleRaw(bool* error){
+uint16_t NCoder730::readAbsoluteAngleRaw(bool* error){
     uint16_t angle;
     uint8_t parity;
     uint8_t highStateCount = 0;
@@ -127,6 +140,37 @@ uint16_t NCoder730::readAngleRaw(bool* error){
     return angle;
 }
 
+void NCoder730::setZeroPosition(float angle){
+    uint16_t zero_pos = pow(2,16) * (1 - (angle / 360.0f));
+    writeRegister(ZERO_SETTING0_REG,uint8_t(zero_pos));
+    writeRegister(ZERO_SETTING1_REG,uint8_t(zero_pos>>8));
+}
+
+float NCoder730::getZeroPosition(){
+    uint16_t zero_pos = readRegister(ZERO_SETTING1_REG) << 8 | readRegister(ZERO_SETTING0_REG);
+    float angle = convertRawAngleToDegree(16 ,pow(2,16) - zero_pos);
+    return angle;
+}
+
+void NCoder730::setPulsePerTurn(uint16_t ppr){
+    uint16_t val = ppr - 1;
+    writeRegister(PPT0_REG,uint8_t(uint8_t(val & 0x03) << 6));
+    writeRegister(PPT1_REG,uint8_t(uint8_t(val >> 2)));
+}
+
+uint16_t NCoder730::getPulsePerTurn(){
+    uint16_t val = readRegister(PPT1_REG)<<2 | (readRegister(PPT0_REG) >> 6) & 0x03;
+    return (val + 1);
+}
+
+void NCoder730::setRotationDirection(bool dir){
+    writeRegister(ROT_DIR_REG,uint8_t(dir) << 7);
+}
+
+bool NCoder730::getRotationDirection(){
+    return readRegister(ROT_DIR_REG);
+}
+
 uint8_t NCoder730::readRegister(uint8_t address){
   uint8_t readbackRegisterValue;
   digitalWrite(_spiChipSelectPin, LOW);
@@ -151,16 +195,4 @@ uint8_t NCoder730::writeRegister(uint8_t address, uint8_t value){
   digitalWrite(_spiChipSelectPin, HIGH);
   //readbackRegisterValue should be equal to the written value
   return readbackRegisterValue;
-}
-
-void NCoder730::setZeroPosition(float angle){
-    uint16_t zero_pos = pow(2,16) * (1 - (angle / 360.0f));
-    writeRegister(ZERO_SETTING0_REG,uint8_t(zero_pos));
-    writeRegister(ZERO_SETTING1_REG,uint8_t(zero_pos>>8));
-}
-
-float NCoder730::getZeroPosition(){
-    uint16_t zero_pos = readRegister(ZERO_SETTING1_REG) << 8 | readRegister(ZERO_SETTING0_REG);
-    float angle = convertRawAngleToDegree(16 ,pow(2,16) - zero_pos);
-    return angle;
 }
