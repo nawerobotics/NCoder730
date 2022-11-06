@@ -221,7 +221,19 @@ public:
      * @return returns the MGHT value (refer datasheet for more details) 
      */
     uint8_t getMagneticFieldHighThreshold();
+    /**
+     * @brief Get the Magnetic Field Low Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is below the low threshold. 
+     * @return returns false if the magnetic field is above the low threshold
+     */
     bool getMagneticFieldLowLevelStatus();
+    /**
+     * @brief Get the Magnetic Field High Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is above the high threshold. 
+     * @return returns false if the magnetic field is below the high threshold
+     */
     bool getMagneticFieldHighLevelStatus();
 
 };
