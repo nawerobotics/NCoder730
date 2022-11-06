@@ -223,8 +223,8 @@ void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
     case 64:
         MGHT_val = 3;
         break;
-        MGHT_val = 4;
     case 78:
+        MGHT_val = 4;
         break;
     case 92:
         MGHT_val = 5;
@@ -294,7 +294,7 @@ uint8_t NCoder730::getMagneticFieldHighThreshold(){
         MGHT = 64;
         break;
     case 4:
-        MGHT = 48;
+        MGHT = 78;
         break;
     case 5:
         MGHT = 92;
@@ -309,6 +309,14 @@ uint8_t NCoder730::getMagneticFieldHighThreshold(){
         break;
     }
     return MGHT;
+}
+
+bool NCoder730::getMagneticFieldLowLevelStatus(){
+    return ((readRegister(MAG_FIELD_LEVEL_REG)>>6) & 0x1);
+}
+
+bool NCoder730::getMagneticFieldHighLevelStatus(){
+    return ((readRegister(MAG_FIELD_LEVEL_REG)>>7) & 0x1);
 }
 
 uint8_t NCoder730::readRegister(uint8_t address){

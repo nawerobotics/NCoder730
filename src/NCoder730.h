@@ -37,6 +37,7 @@
 #define PPT1_REG 0x5
 #define MAG_FIELD_THRESHOLD_REG 0x6
 #define ROT_DIR_REG 0x9
+#define MAG_FIELD_LEVEL_REG 0x1B
 
 class NCoder730 {
 private:
@@ -220,6 +221,8 @@ public:
      * @return returns the MGHT value (refer datasheet for more details) 
      */
     uint8_t getMagneticFieldHighThreshold();
+    bool getMagneticFieldLowLevelStatus();
+    bool getMagneticFieldHighLevelStatus();
 
 };
 
