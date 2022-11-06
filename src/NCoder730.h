@@ -199,10 +199,15 @@ public:
      */
     bool getRotationDirection();
     /**
+     * @brief Set the Magnetic Field Low Threshold value for NCoder730
+     * 
+     */
+    void setMagneticFieldLowThreshold(uint8_t MAGLT);
+    /**
      * @brief Set the Magnetic Field High Threshold value for NCoder730
      * 
      */
-    void setMagneticFieldHighThreshold();
+    void setMagneticFieldHighThreshold(uint8_t MAGHT);
     /**
      * @brief Get the Magnetic Field Low Threshold of NCoder730
      * 

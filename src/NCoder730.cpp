@@ -171,8 +171,78 @@ bool NCoder730::getRotationDirection(){
     return readRegister(ROT_DIR_REG);
 }
 
+void NCoder730::setMagneticFieldLowThreshold(uint8_t MGLT){
+    uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
+    uint8_t MGLT_val = 0;
+    switch (MGLT)
+    {
+    case 26:
+        MGLT_val = 0;
+        break;
+    case 41:
+        MGLT_val = 1;
+        break;
+    case 56:
+        MGLT_val = 2;
+        break;
+    case 70:
+        MGLT_val = 3;
+        break;
+    case 84:
+        MGLT_val = 4;
+        break;
+    case 98:
+        MGLT_val = 5;
+        break;
+    case 112:
+        MGLT_val = 6;
+        break;
+    case 126:
+        MGLT_val = 7;
+        break;
+    default:
+        break;
+    }
+    writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0x1F) | (MGLT_val  << 5)));
+}
+
+void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
+    uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
+    uint8_t MGHT_val = 0;
+    switch (MGHT)
+    {
+    case 20:
+        MGHT_val = 0;
+        break;
+    case 35:
+        MGHT_val = 1;
+        break;
+    case 50:
+        MGHT_val = 2;
+        break;
+    case 64:
+        MGHT_val = 3;
+        break;
+        MGHT_val = 4;
+    case 78:
+        break;
+    case 92:
+        MGHT_val = 5;
+        break;
+    case 106:
+        MGHT_val = 6;
+        break;
+    case 120:
+        MGHT_val = 7;
+        break;
+    default:
+        break;
+    }
+    writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0xE3) | (MGHT_val  << 2)));
+}
+
 uint8_t NCoder730::getMagneticFieldLowThreshold(){
-    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) << 5) & 0x07;
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 5) & 0x07;
     uint8_t MGLT = 0;
     switch (val)
     {
@@ -183,7 +253,7 @@ uint8_t NCoder730::getMagneticFieldLowThreshold(){
         MGLT = 41;
         break;
     case 2:
-        MGLT = 70;
+        MGLT = 56;
         break;
     case 3:
         MGLT = 70;
@@ -207,7 +277,7 @@ uint8_t NCoder730::getMagneticFieldLowThreshold(){
 }
 
 uint8_t NCoder730::getMagneticFieldHighThreshold(){
-    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) << 2) & 0x07;
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 2) & 0x07;
     uint8_t MGHT = 0;
     switch (val)
     {
