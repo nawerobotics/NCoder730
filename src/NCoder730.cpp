@@ -171,6 +171,76 @@ bool NCoder730::getRotationDirection(){
     return readRegister(ROT_DIR_REG);
 }
 
+uint8_t NCoder730::getMagneticFieldLowThreshold(){
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) << 5) & 0x07;
+    uint8_t MGLT = 0;
+    switch (val)
+    {
+    case 0:
+        MGLT = 26;
+        break;
+    case 1:
+        MGLT = 41;
+        break;
+    case 2:
+        MGLT = 70;
+        break;
+    case 3:
+        MGLT = 70;
+        break;
+    case 4:
+        MGLT = 84;
+        break;
+    case 5:
+        MGLT = 98;
+        break;
+    case 6:
+        MGLT = 112;
+        break;
+    case 7:
+        MGLT = 126;
+        break;
+    default:
+        break;
+    }
+    return MGLT;
+}
+
+uint8_t NCoder730::getMagneticFieldHighThreshold(){
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) << 2) & 0x07;
+    uint8_t MGHT = 0;
+    switch (val)
+    {
+    case 0:
+        MGHT = 20;
+        break;
+    case 1:
+        MGHT = 35;
+        break;
+    case 2:
+        MGHT = 50;
+        break;
+    case 3:
+        MGHT = 64;
+        break;
+    case 4:
+        MGHT = 48;
+        break;
+    case 5:
+        MGHT = 92;
+        break;
+    case 6:
+        MGHT = 106;
+        break;
+    case 7:
+        MGHT = 120;
+        break;
+    default:
+        break;
+    }
+    return MGHT;
+}
+
 uint8_t NCoder730::readRegister(uint8_t address){
   uint8_t readbackRegisterValue;
   digitalWrite(_spiChipSelectPin, LOW);

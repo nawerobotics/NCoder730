@@ -198,6 +198,24 @@ public:
      * @return returns false if the rotation direction is anticlockwise
      */
     bool getRotationDirection();
+    /**
+     * @brief Set the Magnetic Field High Threshold value for NCoder730
+     * 
+     */
+    void setMagneticFieldHighThreshold();
+    /**
+     * @brief Get the Magnetic Field Low Threshold of NCoder730
+     * 
+     * @return returns the MGLT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldLowThreshold();
+    /**
+     * @brief Get the Magnetic Field High Threshold of NCoder730
+     * 
+     * @return returns the MGHT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldHighThreshold();
+
 };
 
 #endif // _NCoder730_H_
