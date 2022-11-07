@@ -201,12 +201,12 @@ public:
     bool getRotationDirection();
     /**
      * @brief Set the Magnetic Field Low Threshold value for NCoder730
-     * 
+     * Following values can be set: 26mT, 41mT, 56mT, 70mT ,84mT ,98mT ,112mT ,126mT.
      */
     void setMagneticFieldLowThreshold(uint8_t MAGLT);
     /**
      * @brief Set the Magnetic Field High Threshold value for NCoder730
-     * 
+     * Following values can be set: 20mT, 35mT, 50mT, 64mT ,78mT ,92mT ,106mT ,120mT.
      */
     void setMagneticFieldHighThreshold(uint8_t MAGHT);
     /**
