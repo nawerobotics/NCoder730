@@ -160,7 +160,7 @@ void NCoder730::setPulsePerTurn(uint16_t ppr){
 }
 
 uint16_t NCoder730::getPulsePerTurn(){
-    uint16_t val = readRegister(PPT1_REG)<<2 | (readRegister(PPT0_REG) >> 6) & 0x03;
+    uint16_t val = readRegister(PPT1_REG) << 2 | (readRegister(PPT0_REG) >> 6) & 0x03;
     return (val + 1);
 }
 
@@ -174,7 +174,7 @@ bool NCoder730::getRotationDirection(){
 
 void NCoder730::setMagneticFieldLowThreshold(uint8_t MGLT){
     uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
-    uint8_t MGLT_val = 0;
+    uint8_t MGLT_val = -1;
     switch (MGLT)
     {
     case 26:
@@ -209,7 +209,7 @@ void NCoder730::setMagneticFieldLowThreshold(uint8_t MGLT){
 
 void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
     uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
-    uint8_t MGHT_val = 0;
+    uint8_t MGHT_val = -1;
     switch (MGHT)
     {
     case 20:
@@ -244,7 +244,7 @@ void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
 
 uint8_t NCoder730::getMagneticFieldLowThreshold(){
     uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 5) & 0x07;
-    uint8_t MGLT = 0;
+    uint8_t MGLT = -1;
     switch (val)
     {
     case 0:
@@ -279,7 +279,7 @@ uint8_t NCoder730::getMagneticFieldLowThreshold(){
 
 uint8_t NCoder730::getMagneticFieldHighThreshold(){
     uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 2) & 0x07;
-    uint8_t MGHT = 0;
+    uint8_t MGHT = -1;
     switch (val)
     {
     case 0:
@@ -318,6 +318,34 @@ bool NCoder730::getMagneticFieldLowLevelStatus(){
 
 bool NCoder730::getMagneticFieldHighLevelStatus(){
     return ((readRegister(MAG_FIELD_LEVEL_REG)>>7) & 0x1);
+}
+
+void NCoder730::setIndexLength(float length){
+    uint8_t val = length * 2 - 1;
+    if(val < 0 && val > 3)
+        val = 0;
+    uint8_t reg_val = readRegister(ILIP_REG);
+    writeRegister(ILIP_REG, (reg_val  & 0xCF) | (val << 4));
+}
+
+float NCoder730::getIndexLength(){
+    return (((readRegister(ILIP_REG) >> 4) & 0x3) + 1.0f) * 0.50f;
+}
+
+void NCoder730::setIndexPosition(uint8_t position){
+    uint8_t val = -1;
+    uint8_t reg_val = readRegister(ILIP_REG);
+    val = (((reg_val >> 4) & 0x03) + position) &0x03;
+    writeRegister(ILIP_REG, (reg_val & 0xF3) | (val << 2 ));
+}
+
+uint8_t NCoder730::getIndexPosition(){
+    uint8_t reg_val = readRegister(ILIP_REG);
+    uint8_t length_reg_val = (reg_val >> 4) & 0x3;
+    uint8_t pos_reg_val = (reg_val >> 2) & 0x3;
+    if(pos_reg_val < length_reg_val)
+        pos_reg_val = pos_reg_val | 0x4;
+    return (pos_reg_val - length_reg_val) & 0x3;
 }
 
 uint8_t NCoder730::readRegister(uint8_t address){

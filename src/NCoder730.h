@@ -235,6 +235,44 @@ public:
      * @return returns false if the magnetic field is below the high threshold
      */
     bool getMagneticFieldHighLevelStatus();
+    /**
+     * @brief Set the Index Length 
+     * 
+     * @param length is the length of index pulse 
+     * Four Possible values accepted: Index lenght is 
+     * 0.5 times the A or B pulse length
+     * 1 times the A or B pulse length
+     * 1.5 times the A or B pulse length
+     * 2 times the A or B pulse length
+     * Refer Fig 26 Page No. 23 of MA730 IC datasheet for more details
+     */
+    void setIndexLength(float length);
+    /**
+     * @brief Get the Index Length 
+     * 
+     * @return returns the length of index pulse with respect to A or B pulse length
+     */
+    float getIndexLength();
+    /**
+     * @brief Set the Index Position with respect to channel A or B
+     * 
+     * @param pos is value for setting rising edge of Index pulse with respect to A or B pulse
+     * 0 : index rising edge is aligned with the channel B falling edge
+     * 1 : index rising edge is aligned with the channel A rising edge
+     * 2 : index rising edge is aligned with the channel B rising edge
+     * 3 : index rising edge is aligned with the channel A falling edge
+     */
+    void setIndexPosition(uint8_t pos);
+    /**
+     * @brief Get the Index Position with respect to channel A or B
+     * 
+     * @return returns the value of pos which is as follows:
+     * 0 : index rising edge is aligned with the channel B falling edge
+     * 1 : index rising edge is aligned with the channel A rising edge
+     * 2 : index rising edge is aligned with the channel B rising edge
+     * 3 : index rising edge is aligned with the channel A falling edge
+     */
+    uint8_t getIndexPosition();
 
 };
 
