@@ -26,6 +26,10 @@ void setup() {
    */
   enc.setZeroPosition(30);  //  Sets zero angle offset by 30 degrees
   enc.setPulsePerTurn(1000);  // Sets PPR of incremental encoder to 1000
+  enc.setIndexLength(2.0f);  // Set index length to twice the pulse width of A or B
+  enc.setIndexPosition(1);  // Make index rising edge is align with the channel A rising edge
+  enc.setMagneticFieldLowThreshold(26); // Set Magnetic Field Low threshold to 26mT
+  enc.setMagneticFieldHighThreshold(120); // Set Magnetic Field High threshold to 120mT
   enc.setRotationDirection(true); //Sets the direction of rotation as anti-clockwise
   
   /**
