@@ -171,6 +171,80 @@ To use this library, download the library file first, paste it into the \Arduino
      * @return returns false if the rotation direction is anticlockwise
      */
     bool getRotationDirection();
+    /**
+     * @brief Set the Magnetic Field Low Threshold value for NCoder730
+     * Following values can be set: 26mT, 41mT, 56mT, 70mT ,84mT ,98mT ,112mT ,126mT.
+     */
+    void setMagneticFieldLowThreshold(uint8_t MAGLT);
+    /**
+     * @brief Set the Magnetic Field High Threshold value for NCoder730
+     * Following values can be set: 20mT, 35mT, 50mT, 64mT ,78mT ,92mT ,106mT ,120mT.
+     */
+    void setMagneticFieldHighThreshold(uint8_t MAGHT);
+    /**
+     * @brief Get the Magnetic Field Low Threshold of NCoder730
+     * 
+     * @return returns the MGLT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldLowThreshold();
+    /**
+     * @brief Get the Magnetic Field High Threshold of NCoder730
+     * 
+     * @return returns the MGHT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldHighThreshold();
+    /**
+     * @brief Get the Magnetic Field Low Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is below the low threshold. 
+     * @return returns false if the magnetic field is above the low threshold
+     */
+    bool getMagneticFieldLowLevelStatus();
+    /**
+     * @brief Get the Magnetic Field High Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is above the high threshold. 
+     * @return returns false if the magnetic field is below the high threshold
+     */
+    bool getMagneticFieldHighLevelStatus();
+    /**
+     * @brief Set the Index Length 
+     * 
+     * @param length is the length of index pulse 
+     * Four Possible values accepted: Index lenght is 
+     * 0.5 times the A or B pulse length
+     * 1 times the A or B pulse length
+     * 1.5 times the A or B pulse length
+     * 2 times the A or B pulse length
+     * Refer Fig 26 Page No. 23 of MA730 IC datasheet for more details
+     */
+    void setIndexLength(float length);
+    /**
+     * @brief Get the Index Length 
+     * 
+     * @return returns the length of index pulse with respect to A or B pulse length
+     */
+    float getIndexLength();
+    /**
+     * @brief Set the Index Position with respect to channel A or B
+     * 
+     * @param pos is value for setting rising edge of Index pulse with respect to A or B pulse
+     * 0 : index rising edge is aligned with the channel B falling edge
+     * 1 : index rising edge is aligned with the channel A rising edge
+     * 2 : index rising edge is aligned with the channel B rising edge
+     * 3 : index rising edge is aligned with the channel A falling edge
+     */
+    void setIndexPosition(uint8_t pos);
+    /**
+     * @brief Get the Index Position with respect to channel A or B
+     * 
+     * @return returns the value of pos which is as follows:
+     * 0 : index rising edge is aligned with the channel B falling edge
+     * 1 : index rising edge is aligned with the channel A rising edge
+     * 2 : index rising edge is aligned with the channel B rising edge
+     * 3 : index rising edge is aligned with the channel A falling edge
+     */
+    uint8_t getIndexPosition();
 
 ```
 
