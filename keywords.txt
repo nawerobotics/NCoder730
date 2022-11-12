@@ -26,8 +26,18 @@ setZeroPosition	KEYWORD2
 getZeroPosition	KEYWORD2
 setPulsePerTurn	KEYWORD2
 getPulsePerTurn	KEYWORD2
-setRotationDirection KEYWORD2
-getRotationDirection KEYWORD2
+setRotationDirection	KEYWORD2
+getRotationDirection	KEYWORD2
+setMagneticFieldLowThreshold	KEYWORD2
+setMagneticFieldHighThreshold	KEYWORD2
+getMagneticFieldLowThreshold	KEYWORD2
+getMagneticFieldHighThreshold	KEYWORD2
+getMagneticFieldLowLevelStatus	KEYWORD2
+getMagneticFieldHighLevelStatus	KEYWORD2
+setIndexLength	KEYWORD2
+getIndexLength	KEYWORD2
+setIndexPosition	KEYWORD2
+getIndexPosition	KEYWORD2
 #######################################
 # Instances (KEYWORD2)
 #######################################

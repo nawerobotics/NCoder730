@@ -154,12 +154,13 @@ float NCoder730::getZeroPosition(){
 
 void NCoder730::setPulsePerTurn(uint16_t ppr){
     uint16_t val = ppr - 1;
-    writeRegister(PPT0_REG,uint8_t(uint8_t(val & 0x03) << 6));
+    uint8_t reg_val = readRegister(PPT0_REG);
+    writeRegister(PPT0_REG,uint8_t(uint8_t(val & 0x03) << 6) | (reg_val & 0x3F));
     writeRegister(PPT1_REG,uint8_t(uint8_t(val >> 2)));
 }
 
 uint16_t NCoder730::getPulsePerTurn(){
-    uint16_t val = readRegister(PPT1_REG)<<2 | (readRegister(PPT0_REG) >> 6) & 0x03;
+    uint16_t val = readRegister(PPT1_REG) << 2 | (readRegister(PPT0_REG) >> 6) & 0x03;
     return (val + 1);
 }
 
@@ -169,6 +170,182 @@ void NCoder730::setRotationDirection(bool dir){
 
 bool NCoder730::getRotationDirection(){
     return readRegister(ROT_DIR_REG);
+}
+
+void NCoder730::setMagneticFieldLowThreshold(uint8_t MGLT){
+    uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
+    uint8_t MGLT_val = -1;
+    switch (MGLT)
+    {
+    case 26:
+        MGLT_val = 0;
+        break;
+    case 41:
+        MGLT_val = 1;
+        break;
+    case 56:
+        MGLT_val = 2;
+        break;
+    case 70:
+        MGLT_val = 3;
+        break;
+    case 84:
+        MGLT_val = 4;
+        break;
+    case 98:
+        MGLT_val = 5;
+        break;
+    case 112:
+        MGLT_val = 6;
+        break;
+    case 126:
+        MGLT_val = 7;
+        break;
+    default:
+        break;
+    }
+    writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0x1F) | (MGLT_val  << 5)));
+}
+
+void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
+    uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
+    uint8_t MGHT_val = -1;
+    switch (MGHT)
+    {
+    case 20:
+        MGHT_val = 0;
+        break;
+    case 35:
+        MGHT_val = 1;
+        break;
+    case 50:
+        MGHT_val = 2;
+        break;
+    case 64:
+        MGHT_val = 3;
+        break;
+    case 78:
+        MGHT_val = 4;
+        break;
+    case 92:
+        MGHT_val = 5;
+        break;
+    case 106:
+        MGHT_val = 6;
+        break;
+    case 120:
+        MGHT_val = 7;
+        break;
+    default:
+        break;
+    }
+    writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0xE3) | (MGHT_val  << 2)));
+}
+
+uint8_t NCoder730::getMagneticFieldLowThreshold(){
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 5) & 0x07;
+    uint8_t MGLT = -1;
+    switch (val)
+    {
+    case 0:
+        MGLT = 26;
+        break;
+    case 1:
+        MGLT = 41;
+        break;
+    case 2:
+        MGLT = 56;
+        break;
+    case 3:
+        MGLT = 70;
+        break;
+    case 4:
+        MGLT = 84;
+        break;
+    case 5:
+        MGLT = 98;
+        break;
+    case 6:
+        MGLT = 112;
+        break;
+    case 7:
+        MGLT = 126;
+        break;
+    default:
+        break;
+    }
+    return MGLT;
+}
+
+uint8_t NCoder730::getMagneticFieldHighThreshold(){
+    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 2) & 0x07;
+    uint8_t MGHT = -1;
+    switch (val)
+    {
+    case 0:
+        MGHT = 20;
+        break;
+    case 1:
+        MGHT = 35;
+        break;
+    case 2:
+        MGHT = 50;
+        break;
+    case 3:
+        MGHT = 64;
+        break;
+    case 4:
+        MGHT = 78;
+        break;
+    case 5:
+        MGHT = 92;
+        break;
+    case 6:
+        MGHT = 106;
+        break;
+    case 7:
+        MGHT = 120;
+        break;
+    default:
+        break;
+    }
+    return MGHT;
+}
+
+bool NCoder730::getMagneticFieldLowLevelStatus(){
+    return ((readRegister(MAG_FIELD_LEVEL_REG)>>6) & 0x1);
+}
+
+bool NCoder730::getMagneticFieldHighLevelStatus(){
+    return ((readRegister(MAG_FIELD_LEVEL_REG)>>7) & 0x1);
+}
+
+void NCoder730::setIndexLength(float length){
+    uint8_t val = length * 2 - 1;
+    if(val < 0 && val > 3)
+        val = 0;
+    uint8_t reg_val = readRegister(ILIP_REG);
+    writeRegister(ILIP_REG, (reg_val  & 0xCF) | (val << 4));
+}
+
+float NCoder730::getIndexLength(){
+    return (((readRegister(ILIP_REG) >> 4) & 0x3) + 1.0f) * 0.50f;
+}
+
+void NCoder730::setIndexPosition(uint8_t position){
+    uint8_t val = -1;
+    uint8_t reg_val = readRegister(ILIP_REG);
+    val = (((reg_val >> 4) & 0x03) + position) &0x03;
+    writeRegister(ILIP_REG, (reg_val & 0xF3) | (val << 2 ));
+}
+
+uint8_t NCoder730::getIndexPosition(){
+    uint8_t reg_val = readRegister(ILIP_REG);
+    uint8_t length_reg_val = (reg_val >> 4) & 0x3;
+    uint8_t pos_reg_val = (reg_val >> 2) & 0x3;
+    if(pos_reg_val < length_reg_val)
+        pos_reg_val = pos_reg_val | 0x4;
+    return (pos_reg_val - length_reg_val) & 0x3;
 }
 
 uint8_t NCoder730::readRegister(uint8_t address){
