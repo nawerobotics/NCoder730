@@ -38,6 +38,7 @@
 #define MAG_FIELD_THRESHOLD_REG 0x6
 #define ROT_DIR_REG 0x9
 #define MAG_FIELD_LEVEL_REG 0x1B
+#define FW_REG  0x0E
 
 class NCoder730 {
 private:
@@ -172,6 +173,42 @@ public:
      */
     float getZeroPosition();
     /**
+     * @brief Set the value of BCT Settings the NCoder730
+     * 
+     * @param bct_value BCT value
+     */
+    void setBCTValue(uint8_t bct_value);
+    /**
+     * @brief Get the BCT settings of the NCoder730
+     * 
+     * @return returns value of the BCT Register
+     */
+    uint8_t getBCTValue();
+    /**
+     * @brief Enable/Disable the Enable Trimming of X axis of the NCoder730
+     * 
+     * @param val status of ETX
+     */
+    void setETX(bool val);
+    /**
+     * @brief Enable/Disable the Enable Trimming of Y axis of the NCoder730
+     * 
+     * @param val status of ETY
+     */
+    void setETY(bool val);
+    /**
+     * @brief Get the Enable Trimming of X axis of the NCoder730
+     * 
+     * @return returns status of ETX
+     */
+    bool getETX();
+    /**
+     * @brief Get the Enable Trimming of Y axis of the NCoder730
+     * 
+     * @return returns status of ETX
+     */
+    bool getETY();
+    /**
      * @brief Set the Pulse Per Turn for NCoder730
      * 
      * @param ppr Pulse Per Revolution value of the Encoder in Incremental Mode
@@ -184,57 +221,6 @@ public:
      * @return returns the PPR value
      */
     uint16_t getPulsePerTurn();
-    /**
-     * @brief Set the Rotation Direction for the NCoder730
-     * 
-     * @param dir direction value
-     * @n true -> clockwise
-     * @n false-> anticlockwise
-     */
-    void setRotationDirection(bool dir);
-    /**
-     * @brief Get the Rotation Direction of the NCoder730
-     * 
-     * @return returns true if the rotation direction is clockwise
-     * @return returns false if the rotation direction is anticlockwise
-     */
-    bool getRotationDirection();
-    /**
-     * @brief Set the Magnetic Field Low Threshold value for NCoder730
-     * Following values can be set: 26mT, 41mT, 56mT, 70mT ,84mT ,98mT ,112mT ,126mT.
-     */
-    void setMagneticFieldLowThreshold(uint8_t MAGLT);
-    /**
-     * @brief Set the Magnetic Field High Threshold value for NCoder730
-     * Following values can be set: 20mT, 35mT, 50mT, 64mT ,78mT ,92mT ,106mT ,120mT.
-     */
-    void setMagneticFieldHighThreshold(uint8_t MAGHT);
-    /**
-     * @brief Get the Magnetic Field Low Threshold of NCoder730
-     * 
-     * @return returns the MGLT value (refer datasheet for more details) 
-     */
-    uint8_t getMagneticFieldLowThreshold();
-    /**
-     * @brief Get the Magnetic Field High Threshold of NCoder730
-     * 
-     * @return returns the MGHT value (refer datasheet for more details) 
-     */
-    uint8_t getMagneticFieldHighThreshold();
-    /**
-     * @brief Get the Magnetic Field Low Level Status of NCoder730
-     * 
-     * @return returns true if the magnetic field is below the low threshold. 
-     * @return returns false if the magnetic field is above the low threshold
-     */
-    bool getMagneticFieldLowLevelStatus();
-    /**
-     * @brief Get the Magnetic Field High Level Status of NCoder730
-     * 
-     * @return returns true if the magnetic field is above the high threshold. 
-     * @return returns false if the magnetic field is below the high threshold
-     */
-    bool getMagneticFieldHighLevelStatus();
     /**
      * @brief Set the Index Length 
      * 
@@ -273,6 +259,68 @@ public:
      * 3 : index rising edge is aligned with the channel A falling edge
      */
     uint8_t getIndexPosition();
+    /**
+     * @brief Set the Magnetic Field Low Threshold value for NCoder730
+     * Following values can be set: 26mT, 41mT, 56mT, 70mT ,84mT ,98mT ,112mT ,126mT.
+     */
+    void setMagneticFieldLowThreshold(uint8_t MAGLT);
+    /**
+     * @brief Set the Magnetic Field High Threshold value for NCoder730
+     * Following values can be set: 20mT, 35mT, 50mT, 64mT ,78mT ,92mT ,106mT ,120mT.
+     */
+    void setMagneticFieldHighThreshold(uint8_t MAGHT);
+    /**
+     * @brief Get the Magnetic Field Low Threshold of NCoder730
+     * 
+     * @return returns the MGLT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldLowThreshold();
+    /**
+     * @brief Get the Magnetic Field High Threshold of NCoder730
+     * 
+     * @return returns the MGHT value (refer datasheet for more details) 
+     */
+    uint8_t getMagneticFieldHighThreshold();
+    /**
+     * @brief Set the Rotation Direction for the NCoder730
+     * 
+     * @param dir direction value
+     * @n true -> clockwise
+     * @n false-> anticlockwise
+     */
+    void setRotationDirection(bool dir);
+    /**
+     * @brief Get the Rotation Direction of the NCoder730
+     * 
+     * @return returns true if the rotation direction is clockwise
+     * @return returns false if the rotation direction is anticlockwise
+     */
+    bool getRotationDirection();
+    /**
+     * @brief Set the Filter Window
+     * @param filter_window value of the filter window
+    */
+    void setFilterWindow(uint8_t filter_window);
+    /**
+     * @brief Get the value of the Filter Window settings of the NCoder730
+     * 
+     * @return returns the value of filter window
+     */
+    uint8_t getFilterWindow();
+    /**
+     * @brief Get the Magnetic Field Low Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is below the low threshold. 
+     * @return returns false if the magnetic field is above the low threshold
+     */
+    bool getMagneticFieldLowLevelStatus();
+    /**
+     * @brief Get the Magnetic Field High Level Status of NCoder730
+     * 
+     * @return returns true if the magnetic field is above the high threshold. 
+     * @return returns false if the magnetic field is below the high threshold
+     */
+    bool getMagneticFieldHighLevelStatus();
 
 };
 
