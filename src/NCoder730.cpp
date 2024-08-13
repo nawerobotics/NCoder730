@@ -152,6 +152,32 @@ float NCoder730::getZeroPosition(){
     return angle;
 }
 
+void NCoder730::setBCTValue(uint8_t bct_value){
+    writeRegister(BCT_REG, bct_value);
+}
+
+uint8_t NCoder730::getBCTValue(){
+    return readRegister(BCT_REG);
+}
+
+void NCoder730::setETX(bool val){
+    bool temp = getETY();
+    writeRegister(TRIMMING_REG, temp << 1 | val);
+}
+
+void NCoder730::setETY(bool val){
+    bool temp = getETX();
+    writeRegister(TRIMMING_REG, val << 1 | temp);
+}
+
+bool NCoder730::getETX(){
+    return readRegister(TRIMMING_REG) &0x1;
+}
+
+bool NCoder730::getETY(){
+    return (readRegister(TRIMMING_REG) >> 1) & 0x1;
+}
+
 void NCoder730::setPulsePerTurn(uint16_t ppr){
     uint16_t val = ppr - 1;
     uint8_t reg_val = readRegister(PPT0_REG);
@@ -160,7 +186,7 @@ void NCoder730::setPulsePerTurn(uint16_t ppr){
 }
 
 uint16_t NCoder730::getPulsePerTurn(){
-    uint16_t val = readRegister(PPT1_REG) << 2 | (readRegister(PPT0_REG) >> 6) & 0x03;
+    uint16_t val = (readRegister(PPT1_REG) << 2) | ((readRegister(PPT0_REG) >> 6) & 0x03);
     return (val + 1);
 }
 
@@ -174,142 +200,22 @@ bool NCoder730::getRotationDirection(){
 
 void NCoder730::setMagneticFieldLowThreshold(uint8_t MGLT){
     uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
-    uint8_t MGLT_val = -1;
-    switch (MGLT)
-    {
-    case 26:
-        MGLT_val = 0;
-        break;
-    case 41:
-        MGLT_val = 1;
-        break;
-    case 56:
-        MGLT_val = 2;
-        break;
-    case 70:
-        MGLT_val = 3;
-        break;
-    case 84:
-        MGLT_val = 4;
-        break;
-    case 98:
-        MGLT_val = 5;
-        break;
-    case 112:
-        MGLT_val = 6;
-        break;
-    case 126:
-        MGLT_val = 7;
-        break;
-    default:
-        break;
-    }
+    uint8_t MGLT_val = MGLT;
     writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0x1F) | (MGLT_val  << 5)));
 }
 
 void NCoder730::setMagneticFieldHighThreshold(uint8_t MGHT){
     uint8_t reg_val = readRegister(MAG_FIELD_THRESHOLD_REG);
-    uint8_t MGHT_val = -1;
-    switch (MGHT)
-    {
-    case 20:
-        MGHT_val = 0;
-        break;
-    case 35:
-        MGHT_val = 1;
-        break;
-    case 50:
-        MGHT_val = 2;
-        break;
-    case 64:
-        MGHT_val = 3;
-        break;
-    case 78:
-        MGHT_val = 4;
-        break;
-    case 92:
-        MGHT_val = 5;
-        break;
-    case 106:
-        MGHT_val = 6;
-        break;
-    case 120:
-        MGHT_val = 7;
-        break;
-    default:
-        break;
-    }
+    uint8_t MGHT_val = MGHT;
     writeRegister(MAG_FIELD_THRESHOLD_REG, uint8_t((reg_val & 0xE3) | (MGHT_val  << 2)));
 }
 
 uint8_t NCoder730::getMagneticFieldLowThreshold(){
-    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 5) & 0x07;
-    uint8_t MGLT = -1;
-    switch (val)
-    {
-    case 0:
-        MGLT = 26;
-        break;
-    case 1:
-        MGLT = 41;
-        break;
-    case 2:
-        MGLT = 56;
-        break;
-    case 3:
-        MGLT = 70;
-        break;
-    case 4:
-        MGLT = 84;
-        break;
-    case 5:
-        MGLT = 98;
-        break;
-    case 6:
-        MGLT = 112;
-        break;
-    case 7:
-        MGLT = 126;
-        break;
-    default:
-        break;
-    }
-    return MGLT;
+    return (readRegister(MAG_FIELD_THRESHOLD_REG) >> 5) & 0x07;
 }
 
 uint8_t NCoder730::getMagneticFieldHighThreshold(){
-    uint8_t val = (readRegister(MAG_FIELD_THRESHOLD_REG) >> 2) & 0x07;
-    uint8_t MGHT = -1;
-    switch (val)
-    {
-    case 0:
-        MGHT = 20;
-        break;
-    case 1:
-        MGHT = 35;
-        break;
-    case 2:
-        MGHT = 50;
-        break;
-    case 3:
-        MGHT = 64;
-        break;
-    case 4:
-        MGHT = 78;
-        break;
-    case 5:
-        MGHT = 92;
-        break;
-    case 6:
-        MGHT = 106;
-        break;
-    case 7:
-        MGHT = 120;
-        break;
-    default:
-        break;
-    }
-    return MGHT;
+    return (readRegister(MAG_FIELD_THRESHOLD_REG) >> 2) & 0x07;
 }
 
 bool NCoder730::getMagneticFieldLowLevelStatus(){
@@ -346,6 +252,16 @@ uint8_t NCoder730::getIndexPosition(){
     if(pos_reg_val < length_reg_val)
         pos_reg_val = pos_reg_val | 0x4;
     return (pos_reg_val - length_reg_val) & 0x3;
+}
+
+void NCoder730::setFilterWindow(uint8_t filter_window){
+    writeRegister(FW_REG, filter_window);
+}
+
+uint8_t NCoder730::getFilterWindow(){
+    uint8_t reg_val = readRegister(FW_REG);
+    uint8_t filter_window = reg_val;
+    return filter_window;
 }
 
 uint8_t NCoder730::readRegister(uint8_t address){
